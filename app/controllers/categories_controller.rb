@@ -1,6 +1,5 @@
 class CategoriesController < ApplicationController
-  def index
-  end
+  def index; end
 
   def new
     @category = Category.new
@@ -8,7 +7,7 @@ class CategoriesController < ApplicationController
 
   def create
     @category = Category.new(category_params)
-   
+
     if @category.save
       redirect_to categories_path, notice: 'New category was successfully created!'
     else
