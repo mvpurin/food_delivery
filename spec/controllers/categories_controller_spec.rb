@@ -43,4 +43,18 @@ RSpec.describe CategoriesController, type: :controller do
       end
     end
   end
+
+  describe 'GET #index' do
+    let!(:categories) { create_list(:category, 3) }
+
+    before { get :index }
+
+    it 'populates an array of all categories' do
+      expect(assigns(:categories)).to match_array(categories)
+    end
+
+    it 'renders index view' do
+      expect(response).to render_template :index
+    end
+  end
 end

@@ -1,6 +1,10 @@
 FactoryBot.define do
+  sequence :name do |n|
+    "Category_name_#{n}"
+  end
+
   factory :category do
-    name { 'MyString' }
+    name
 
     trait :invalid do
       name { nil }
