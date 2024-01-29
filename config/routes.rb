@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   resources :categories do
-    resources :items, only: [:new, :create], shallow: true
+    resources :items, shallow: true
   end
 
   get 'up' => 'rails/health#show', as: :rails_health_check

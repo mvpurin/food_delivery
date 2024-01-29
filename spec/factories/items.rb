@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :item do
-    name { "MyString" }
+    name { generate :item_name }
     price { 1.5 }
     amount { 1 }
     additional_info { "MyText" }

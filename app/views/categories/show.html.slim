@@ -1,0 +1,4 @@
+.category id="category-#{@category.id}"
+  h2 = @category.name
+  - @category.items.each do |item|
+    = link_to "#{item.name}", item_path(item)

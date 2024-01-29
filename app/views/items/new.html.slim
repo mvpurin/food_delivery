@@ -16,7 +16,7 @@
     
     p
       = f.label :price
-      = f.number_field :price, min: 0.01
+      = f.number_field :price, step: 0.01
     
     p
       = f.submit 'Create item'

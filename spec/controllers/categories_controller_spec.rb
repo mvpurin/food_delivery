@@ -57,4 +57,17 @@ RSpec.describe CategoriesController, type: :controller do
       expect(response).to render_template :index
     end
   end
+
+  describe 'GET #show' do
+    let(:category) { create(:category) }
+    before { get :show, params: { id: category.id } }
+
+    it 'assigns requested category to @category' do
+      expect(assigns(:category)).to eq category
+    end
+
+    it 'renders show view' do
+      expect(response).to render_template :show
+    end
+  end
 end
