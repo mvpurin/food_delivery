@@ -1,4 +1,6 @@
 class CategoriesController < ApplicationController
+  before_action :load_category, only: [:show]
+
   def index
     @categories = Category.all
   end
@@ -17,7 +19,15 @@ class CategoriesController < ApplicationController
     end
   end
 
+  def show
+
+  end
+
   private
+
+  def load_category
+    @category = Category.find(params[:id])
+  end
 
   def category_params
     params.require(:category).permit(:name)
