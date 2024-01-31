@@ -49,6 +49,7 @@ gem 'rubocop-factory_bot', '~> 2.25', '>= 2.25.1'
 gem 'rubocop-rails', require: false
 gem 'rubocop-rspec', '~> 2.26', '>= 2.26.1'
 gem 'slim'
+gem 'devise'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

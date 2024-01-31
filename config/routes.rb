@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+  devise_for :users
+
+  get 'order_items/create'
+  post 'order_items/create'
+  
   resources :categories do
     resources :items, shallow: true
   end
@@ -6,5 +11,5 @@ Rails.application.routes.draw do
   get 'up' => 'rails/health#show', as: :rails_health_check
 
   # Defines the root path route ("/")
-  # root "posts#index"
+  root "categories#index"
 end
