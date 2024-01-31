@@ -6,4 +6,8 @@ FactoryBot.define do
   sequence :category_name do |n|
     "Category #{n}"
   end
+
+  sequence :email do |n|
+    "user#{n}@email.com"
+  end
 end
