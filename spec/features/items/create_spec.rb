@@ -2,10 +2,13 @@ require 'rails_helper'
 
 feature 'User can create new item', '
   User can create new item with name, price and amount' do
+    given(:user) { create(:user) }
+
     describe 'User' do
+      background { sign_in(user) }
       let(:category) { create(:category) }
 
-      it 'creates new item' do
+      scenario 'creates new item' do
         visit new_category_item_path(category)
         fill_in 'item[name]', with: 'New item title'
         fill_in 'item[additional_info]', with: 'Some info'
@@ -16,7 +19,7 @@ feature 'User can create new item', '
         expect(page).to have_content 'New item was successfully created!'
       end
 
-      it 'creates new item with errors' do
+      scenario 'creates new item with errors' do
         visit new_category_item_path(category)
         fill_in 'item[name]', with: ''
         fill_in 'item[additional_info]', with: ''

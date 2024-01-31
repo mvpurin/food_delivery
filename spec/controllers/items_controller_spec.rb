@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe ItemsController, type: :controller do
+  let(:user) { create(:user) }
+  before { login(user) }
 
   describe "GET #new" do
     let(:category) { create(:category) }

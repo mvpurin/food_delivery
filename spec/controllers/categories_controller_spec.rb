@@ -1,7 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe CategoriesController, type: :controller do
+  let(:user) { create(:user) }
+
   describe 'GET #new' do
+    before { login(user) }
     before { get :new }
 
     it 'assigns a new category to @category' do
@@ -19,6 +22,8 @@ RSpec.describe CategoriesController, type: :controller do
   end
 
   describe 'POST #create' do
+    before { login(user) }
+    
     context 'with valid attributes' do
       it 'saves new category to the database' do
         expect { post :create, params: { category: attributes_for(:category) } }.to change(Category, :count).by(1)
