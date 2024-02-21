@@ -1,7 +1,7 @@
 = render 'shared/errors', resource: @item
 
 .new-item
-  = form_with model: [@category, @item] do |f|
+  = form_with model: [:admin, @category, @item] do |f|
     p
       = f.label :name
       = f.text_field :name
