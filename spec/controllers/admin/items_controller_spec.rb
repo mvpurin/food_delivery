@@ -49,4 +49,57 @@ RSpec.describe Admin::ItemsController, type: :controller do
       end
     end
   end
+
+  describe 'PATCH #update' do
+    let(:category) { create(:category) }
+    let(:item) { create(:item, category: category) }
+
+    context 'with valid attributes' do
+      before { patch :update, params: { id: item.id, item: { name: 'Changed item name' } } }
+
+      it 'assigns the requested item to @item' do
+        expect(assigns(:item)).to eq item
+      end
+
+      it 'updates @item' do
+        expect(item.reload.name).to eq 'Changed item name'
+      end
+
+      it 'redirects to index view' do
+        expect(response).to redirect_to admin_category_path(category)
+      end
+    end
+
+    context 'with invalid attributes' do
+      it 'does not update the @item' do
+        expect do
+          patch :update, params: { id: item.id, item: attributes_for(:item, :invalid) }
+        end.not_to change(item, :name)
+      end
+
+      it 'renders edit view' do
+        patch :update, params: { id: item.id, item: attributes_for(:item, :invalid) }
+        expect(response).to render_template :edit
+      end
+    end
+  end
+
+  describe 'DELETE #destroy' do
+  let(:category) { create(:category) }
+  let!(:item) { create(:item, category: category) }
+
+  it 'assigns the requested item to @item' do
+    delete :destroy, params: { id: item }
+    expect(assigns(:item)).to eq item
+  end
+
+  it 'deletes the item' do
+    expect { delete :destroy, params: { id: item } }.to change(Item, :count).by(-1)
+  end
+
+  it 'redirects to show view' do
+    delete :destroy, params: { id: item }
+    expect(response).to redirect_to admin_category_path(category)
+  end
+end
 end
