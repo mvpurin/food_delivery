@@ -3,9 +3,13 @@ Rails.application.routes.draw do
 
   get 'order_items/create'
   post 'order_items/create'
-  
-  resources :categories do
-    resources :items, shallow: true
+
+  resources :categories, only: [:index, :show]
+
+  namespace :admin do
+    resources :categories do
+      resources :items, shallow: true
+    end
   end
 
   get 'up' => 'rails/health#show', as: :rails_health_check

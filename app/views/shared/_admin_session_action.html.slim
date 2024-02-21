@@ -1,0 +1,7 @@
+.admin-session-action 
+  - if user_signed_in?
+    h1= "Food Delivery | Admin panel"
+    p= "Welcome, #{current_user.email}"
+    p= button_to 'Sign out', destroy_user_session_path, method: :delete
+  - if !user_signed_in?
+    = link_to 'Sign in', new_user_session_path

@@ -1,5 +1,5 @@
 .category id="category-#{@category.id}"
   h2 = @category.name
+  p= link_to 'Add new item', new_admin_category_item_path(@category)
   - @category.items.each do |item|
     p= "#{item.name}"
-    p= link_to "Add to order", order_items_create_path(item_id: item.id)
