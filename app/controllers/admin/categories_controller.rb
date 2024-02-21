@@ -1,5 +1,5 @@
 class Admin::CategoriesController < Admin::BaseController
-  before_action :load_category, only: [:show]
+  before_action :load_category, only: [:show, :edit, :update, :destroy]
 
   def index
     @categories = Category.all
@@ -21,6 +21,23 @@ class Admin::CategoriesController < Admin::BaseController
 
   def show
 
+  end
+
+  def edit
+
+  end
+
+  def update
+    if @category.update(category_params)
+      redirect_to admin_categories_path, status: 303
+    else
+      render :edit
+    end
+  end
+
+  def destroy
+    @category.destroy
+    redirect_to admin_categories_path
   end
 
   private

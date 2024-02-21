@@ -1,5 +1,6 @@
 class Admin::ItemsController < Admin::BaseController
   before_action :load_category, only: [:new, :create]
+  before_action :load_item, only: [:edit, :update, :destroy]
 
   def new
     @item = @category.items.new
@@ -15,10 +16,31 @@ class Admin::ItemsController < Admin::BaseController
     end
   end
 
+  def edit
+
+  end
+
+  def update
+    if @item.update(item_params)
+      redirect_to admin_category_path(@item.category)
+    else
+      render :edit
+    end
+  end
+
+  def destroy
+    @item.destroy
+    redirect_to admin_category_path(@item.category)
+  end
+
   private
 
   def load_category
     @category = Category.find(params[:category_id])
+  end
+
+  def load_item
+    @item = Item.find(params[:id])
   end
 
   def item_params
