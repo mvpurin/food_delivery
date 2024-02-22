@@ -11,4 +11,10 @@ class User < ApplicationRecord
   validates :email, presence: true, uniqueness: true
   validates :address, presence: true
   validates :phone_number, presence: true, uniqueness: true
+
+  def current_order
+    order = Order.where(user_id: self.id, status: 'in progress').first
+
+    order.present? ? order : nil
+  end
 end
