@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   post 'order_items/create'
 
   resources :categories, only: [:index, :show]
-  resources :orders, only: [:show]
+  resources :orders, only: [:show, :edit, :update]
 
   namespace :admin do
     resources :categories do

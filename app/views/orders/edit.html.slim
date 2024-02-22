@@ -1,0 +1,9 @@
+h2= "Total price: #{@order.summ_price}"
+
+p Please check your address: 
+p= @order.delivery_address
+
+p Please check your phone number: 
+p= @order.client_phone
+
+p= button_to 'Pay'

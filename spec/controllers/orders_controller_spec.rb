@@ -6,6 +6,7 @@ RSpec.describe OrdersController, type: :controller do
     let(:order) { create(:order, user: user, delivery_address: user.address,
       client_phone: user.phone_number) }
     
+    before { login(user) }
     before { get :show, params: { id: order.id } }
 
     it "assigns the requested order to @order" do

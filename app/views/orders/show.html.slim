@@ -9,4 +9,6 @@ ul
 
 h2= "Total price: #{@order.summ_price}"
 
+h3= button_to 'Confirm order', edit_order_path(@order), method: :get
+
 
