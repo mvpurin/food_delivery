@@ -2,5 +2,7 @@
   - if user_signed_in?
     p= "Welcome, #{current_user.email}"
     p= button_to 'Sign out', destroy_user_session_path, method: :delete
+    - if current_user.current_order
+      p= button_to 'My order', order_path(current_user.current_order), method: :get
   - if !user_signed_in?
     = link_to 'Sign in', new_user_session_path
