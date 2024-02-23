@@ -17,4 +17,4 @@ h2= "Total price: #{@order.summ_price}"
 
   p= f.submit 'Save'
 
-p= button_to 'Pay'
+p= button_to 'Pay', pay_order_path(@order), method: :patch

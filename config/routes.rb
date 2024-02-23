@@ -5,7 +5,9 @@ Rails.application.routes.draw do
   post 'order_items/create'
 
   resources :categories, only: [:index, :show]
-  resources :orders, only: [:show, :edit, :update]
+  resources :orders, only: [:show, :edit, :update] do
+    patch 'pay', on: :member
+  end
 
   namespace :admin do
     resources :categories do

@@ -1,6 +1,6 @@
 class OrdersController < ApplicationController
   before_action :authenticate_user!
-  before_action :load_order, only: [:show, :edit, :update]
+  before_action :load_order, only: [:show, :edit, :update, :pay]
 
   def show
     
@@ -16,6 +16,11 @@ class OrdersController < ApplicationController
     else
       render :edit, status: :unprocessable_entity
     end
+  end
+
+  def pay
+    @order.update(status: 'in delivery')
+    redirect_to categories_path, notice: 'Successfully payed!'
   end
 
   private
