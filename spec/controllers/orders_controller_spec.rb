@@ -57,4 +57,25 @@ RSpec.describe OrdersController, type: :controller do
       end
     end
   end
+
+  describe 'PATCH #pay' do
+    let(:user) { create(:user) }
+    let(:order) { create(:order, user: user, delivery_address: user.address,
+      client_phone: user.phone_number) }
+    
+    before { login(user) }
+    before { patch :pay, params: { id: order.id } }
+
+    it 'assigns requested order to @order' do
+      expect(assigns(:order)).to eq(order) 
+    end
+
+    it 'updates status of the order' do
+      expect(order.reload.status).to eq 'in delivery'
+    end
+
+    it 'redirects to categories' do
+      expect(response).to redirect_to categories_path
+    end
+  end
 end
