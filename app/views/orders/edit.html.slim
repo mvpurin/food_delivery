@@ -1,9 +1,16 @@
 h2= "Total price: #{@order.summ_price}"
 
-p Please check your address: 
-p= @order.delivery_address
+= render 'shared/errors', resource: @order
 
-p Please check your phone number: 
-p= @order.client_phone
+= form_with model: [@order] do |f|
+  p Please check your address:
+  = f.label :delivery_address
+  = f.text_field :delivery_address, value: @order.delivery_address
+
+  p Please check your phone number: 
+  = f.label :client_phone
+  = f.text_field :client_phone, value: @order.client_phone
+
+  p= f.submit 'Save'
 
 p= button_to 'Pay'
