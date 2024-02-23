@@ -22,6 +22,15 @@ Authenticated user can edit his address and phone number
       expect(page).to have_field('order[client_phone]', with: '123')
     end
 
+    scenario 'tries to edit comment' do
+      fill_in 'order[comment]', with: 'New comment'
+      click_on 'Save'
+      fill_in 'order[comment]', with: 'One more comment'
+      click_on 'Save'
+
+      expect(page).to have_field('order[comment]', with: 'One more comment')
+    end
+
     scenario 'tries to edit with errors' do
       fill_in 'order[delivery_address]', with: ''
       fill_in 'order[client_phone]', with: ''
