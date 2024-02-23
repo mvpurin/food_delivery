@@ -24,7 +24,7 @@ class Admin::ItemsController < Admin::BaseController
     if @item.update(item_params)
       redirect_to admin_category_path(@item.category)
     else
-      render :edit
+      render :edit, status: :unprocessable_entity
     end
   end
 

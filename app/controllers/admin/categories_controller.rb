@@ -31,7 +31,7 @@ class Admin::CategoriesController < Admin::BaseController
     if @category.update(category_params)
       redirect_to admin_categories_path, status: 303
     else
-      render :edit
+      render :edit, status: :unprocessable_entity
     end
   end
 
