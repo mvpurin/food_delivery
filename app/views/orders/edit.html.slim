@@ -11,6 +11,10 @@ h2= "Total price: #{@order.summ_price}"
   = f.label :client_phone
   = f.text_field :client_phone, value: @order.client_phone
 
+  p Leave a comment: 
+  = f.label :comment
+  = f.text_field :comment, value: @order.comment
+
   p= f.submit 'Save'
 
 p= button_to 'Pay'

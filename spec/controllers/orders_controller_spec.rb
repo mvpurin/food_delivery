@@ -27,7 +27,7 @@ RSpec.describe OrdersController, type: :controller do
 
     context 'with valid attributes' do
       before { patch :update, params: { id: order.id, order: { delivery_address: 'Changed address',
-        client_phone: '123' } } }
+        client_phone: '123', comment: 'some comment' } } }
 
       it 'assigns the requested order to @order' do
         expect(assigns(:order)).to eq order
@@ -36,6 +36,7 @@ RSpec.describe OrdersController, type: :controller do
       it 'updates @order' do
         expect(order.reload.delivery_address).to eq 'Changed address'
         expect(order.reload.client_phone).to eq '123'
+        expect(order.reload.comment).to eq 'some comment'
       end
 
       it 'redirects to edit view' do
