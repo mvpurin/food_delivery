@@ -12,4 +12,11 @@ class Order < ApplicationRecord
   def summ_price
     self.order_items.sum { |order_item| order_item.price * order_item.amount }
   end
+
+  def decrease_items_amount
+    self.order_items.each do |order_item|
+      item = Item.find(order_item.item_id)
+      item.update(amount: item.amount - order_item.amount)
+    end
+  end
 end
