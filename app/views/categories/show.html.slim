@@ -3,4 +3,7 @@
   - @category.items.each do |item|
     .item id="item-#{item.id}"
       p= "#{item.name}"
-      p= link_to "Add to order", order_items_create_path(item_id: item.id)
+      - if item.amount > 0
+        p= link_to "Add to order", order_items_create_path(item_id: item.id)
+      - else
+        p temporarily out of stock
