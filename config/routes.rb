@@ -1,12 +1,18 @@
 Rails.application.routes.draw do
+  get 'users/previous_orders'
   devise_for :users
 
   get 'order_items/create'
   post 'order_items/create'
 
   resources :categories, only: [:index, :show]
+
   resources :orders, only: [:show, :edit, :update] do
     patch 'pay', on: :member
+  end
+
+  resources :users, only: [] do
+    get 'previous_orders', on: :member
   end
 
   namespace :admin do
