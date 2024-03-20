@@ -20,5 +20,22 @@ RSpec.describe Order, type: :model do
 
       expect(total_price).to eq(40)
     end
-  end 
+  end
+
+  describe '#decrease_items_amount' do
+    let(:user) { create(:user) }
+    let(:category) { create(:category) }
+    let(:item_1) { create(:item, category: category, amount: 100) }
+    let(:item_2) { create(:item, category: category, amount: 200) }
+    let(:order) { create(:order, user: user, delivery_address: user.address, client_phone: user.phone_number) }
+    let!(:order_item_1) { create(:order_item, item: item_1, order: order, amount: 10) }
+    let!(:order_item_2) { create(:order_item, item: item_2, order: order, amount: 20) }
+
+    before { order.decrease_items_amount }
+
+    it 'decreases amount of items by the amount of ordered items' do
+      expect(item_1.reload.amount).to eq 90
+      expect(item_2.reload.amount).to eq 180
+    end
+  end
 end

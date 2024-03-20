@@ -35,6 +35,12 @@ Authenticated user can see list of items in his order
 
       expect(page).to have_content "Total price: #{Item.first.price + Item.last.price}"
     end
+
+    scenario 'tries to see his previous orders' do
+      click_on 'My previous orders'
+
+      expect(page).to have_content 'Previous orders'
+    end
   end
 
   scenario 'Unauthenticated user' do

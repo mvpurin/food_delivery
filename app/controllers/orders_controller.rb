@@ -20,6 +20,7 @@ class OrdersController < ApplicationController
 
   def pay
     @order.update(status: 'in delivery')
+    @order.decrease_items_amount
     redirect_to categories_path, notice: 'Successfully payed!'
   end
 

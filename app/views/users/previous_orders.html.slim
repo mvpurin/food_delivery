@@ -1,0 +1,11 @@
+h1 Previous orders
+
+ul
+  - @orders.each do |order|
+    li= order.created_at
+    ul
+      - order.order_items.each do |order_item|
+        li= "#{order_item.item.name}"
+        ul 
+          li= "Amount: #{order_item.amount}"
+    hr

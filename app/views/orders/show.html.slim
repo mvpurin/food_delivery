@@ -1,14 +1,15 @@
 h1 Order
 
-ul
-  - @order.order_items.each do |order_item|
-    li= "#{order_item.item.name}"
-    ul 
-      li= "Amount: #{order_item.amount}"
-      li= "Price: #{order_item.price * order_item.amount}"
+- if @order.status == 'in progress'
+  ul
+    - @order.order_items.each do |order_item|
+      li= "#{order_item.item.name}"
+      ul 
+        li= "Amount: #{order_item.amount}"
+        li= "Price: #{order_item.price * order_item.amount}"
 
-h2= "Total price: #{@order.summ_price}"
+  h2= "Total price: #{@order.summ_price}"
 
-h3= button_to 'Confirm order', edit_order_path(@order), method: :get
+  h3= button_to 'Confirm order', edit_order_path(@order), method: :get
 
 
