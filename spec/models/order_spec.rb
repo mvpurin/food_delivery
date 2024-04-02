@@ -38,4 +38,23 @@ RSpec.describe Order, type: :model do
       expect(item_2.reload.amount).to eq 180
     end
   end
+
+  describe '#pay' do
+    let(:user) { create(:user) }
+    let(:category) { create(:category) }
+    let(:item_1) { create(:item, category: category, amount: 100) }
+    let(:item_2) { create(:item, category: category, amount: 200) }
+    let(:order) { create(:order, user: user, delivery_address: user.address, client_phone: user.phone_number) }
+
+    it 'updates the order status to "in delivery"' do
+      expect(order.status).to_not eq 'in delivery'
+      order.pay
+      expect(order.reload.status).to eq 'in delivery'
+    end
+
+    it 'calls decrease_items_amount method' do
+      expect(order).to receive(:decrease_items_amount)
+      order.pay
+    end
+  end
 end

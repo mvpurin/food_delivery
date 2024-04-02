@@ -19,9 +19,10 @@ class OrdersController < ApplicationController
   end
 
   def pay
-    @order.update(status: 'in delivery')
-    @order.decrease_items_amount
+    @order.pay
     redirect_to categories_path, notice: 'Successfully payed!'
+  rescue ActiveRecord::RecordInvalid => e
+    redirect_to categories_path, notice: 'Some problems, please try again...'
   end
 
   private

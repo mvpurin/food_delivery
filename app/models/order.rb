@@ -16,7 +16,14 @@ class Order < ApplicationRecord
   def decrease_items_amount
     self.order_items.each do |order_item|
       item = Item.find(order_item.item_id)
-      item.update(amount: item.amount - order_item.amount)
+      item.update!(amount: item.amount - order_item.amount)
+    end
+  end
+
+  def pay
+    ActiveRecord::Base.transaction do
+      self.update!(status: 'in delivery')
+      self.decrease_items_amount
     end
   end
 end
