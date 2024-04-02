@@ -36,3 +36,4 @@
 
 /config/database.yml
 /rubocop_pre_commit_hook.rb
+/.vscode

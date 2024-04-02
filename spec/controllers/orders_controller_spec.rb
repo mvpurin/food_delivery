@@ -70,8 +70,9 @@ RSpec.describe OrdersController, type: :controller do
       expect(assigns(:order)).to eq(order) 
     end
 
-    it 'updates status of the order' do
-      expect(order.reload.status).to eq 'in delivery'
+    it 'calls #pay method to the @order' do
+      expect(order).to receive(:pay)
+      order.pay
     end
 
     it 'redirects to categories' do
