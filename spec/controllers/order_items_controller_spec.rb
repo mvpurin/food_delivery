@@ -13,7 +13,7 @@ RSpec.describe OrderItemsController, type: :controller do
       expect(assigns(:item)).to eq item
     end
 
-    it 'incrases order_item amount by 1' do
+    it 'increases order_item amount by 1' do
       expect(assigns(:order_item).amount).to eq 1
     end
 

@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
-  get 'users/previous_orders'
+  devise_for :delivery_people
   devise_for :users
 
+  get 'users/previous_orders'
+  
   get 'order_items/create'
   post 'order_items/create'
 
@@ -18,6 +20,12 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :categories do
       resources :items, shallow: true
+    end
+  end
+
+  namespace :delivery_person do
+    resources :orders, only: [:index] do
+      patch 'complete', on: :member
     end
   end
 

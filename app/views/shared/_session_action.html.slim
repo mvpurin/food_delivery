@@ -6,4 +6,8 @@
       p= button_to 'My order', order_path(current_user.current_order), method: :get
       p= button_to 'My previous orders', previous_orders_user_path(current_user), method: :get
   - if !user_signed_in?
-    = link_to 'Sign in', new_user_session_path
+    p= link_to 'Sign in', new_user_session_path
+    p= link_to 'Sign in (I am a courier)', new_delivery_person_session_path
+  - if delivery_person_signed_in?
+    p= "Welcome, #{current_delivery_person.email}"
+    p= button_to 'Sign out', destroy_delivery_person_session_path, method: :delete

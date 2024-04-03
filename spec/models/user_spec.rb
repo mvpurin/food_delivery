@@ -12,9 +12,10 @@ RSpec.describe User, type: :model do
 
   describe 'current_order' do 
     let(:user) { create(:user) }
+    let(:delivery_person) { create(:delivery_person) }
 
     it 'returns the order that is in progress' do 
-      order = Order.create(user: user, total_price: 0.0, status: 'in progress',
+      order = Order.create(user: user, delivery_person: delivery_person, total_price: 0.0, status: 'in progress',
         payment_method: 'some method', delivery_address: user.address,
         client_phone: user.phone_number)
       
