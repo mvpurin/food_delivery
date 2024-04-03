@@ -1,1 +1,4 @@
 h1 Current order
+- if current_delivery_person.order.present?
+  p= "Address: #{current_delivery_person.order.delivery_address}"
+  p= "Client phone: #{current_delivery_person.order.client_phone}"

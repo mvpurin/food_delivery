@@ -10,4 +10,8 @@ FactoryBot.define do
   sequence :email do |n|
     "user#{n}@email.com"
   end
+
+  sequence :phone_number do |n|
+    "123456#{n}"
+  end
 end
