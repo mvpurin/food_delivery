@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe Order, type: :model do
   it { should have_many(:items).through(:order_items) }
   it { should belong_to(:user) }
+  it { should belong_to(:delivery_person) }
   it { should validate_presence_of(:total_price) }
   it { should validate_presence_of(:status) }
   it { should validate_presence_of(:payment_method) }
@@ -24,10 +25,11 @@ RSpec.describe Order, type: :model do
 
   describe '#decrease_items_amount' do
     let(:user) { create(:user) }
+    let(:delivery_person) { create(:delivery_person) }
     let(:category) { create(:category) }
     let(:item_1) { create(:item, category: category, amount: 100) }
     let(:item_2) { create(:item, category: category, amount: 200) }
-    let(:order) { create(:order, user: user, delivery_address: user.address, client_phone: user.phone_number) }
+    let(:order) { create(:order, user: user, delivery_person: delivery_person, delivery_address: user.address, client_phone: user.phone_number) }
     let!(:order_item_1) { create(:order_item, item: item_1, order: order, amount: 10) }
     let!(:order_item_2) { create(:order_item, item: item_2, order: order, amount: 20) }
 
@@ -41,10 +43,11 @@ RSpec.describe Order, type: :model do
 
   describe '#pay' do
     let(:user) { create(:user) }
+    let(:delivery_person) { create(:delivery_person) }
     let(:category) { create(:category) }
     let(:item_1) { create(:item, category: category, amount: 100) }
     let(:item_2) { create(:item, category: category, amount: 200) }
-    let(:order) { create(:order, user: user, delivery_address: user.address, client_phone: user.phone_number) }
+    let(:order) { create(:order, user: user, delivery_person: delivery_person, delivery_address: user.address, client_phone: user.phone_number) }
 
     it 'updates the order status to "in delivery"' do
       expect(order.status).to_not eq 'in delivery'
