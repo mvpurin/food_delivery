@@ -2,7 +2,7 @@ class Order < ApplicationRecord
   has_many :order_items
   has_many :items, through: :order_items
   belongs_to :user
-  belongs_to :delivery_person
+  belongs_to :delivery_person, optional: true
 
   validates :total_price, presence: true
   validates :status, presence: true
