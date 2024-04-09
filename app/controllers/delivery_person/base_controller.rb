@@ -8,6 +8,7 @@ class DeliveryPerson::BaseController < ApplicationController
 
   def delivery_person_required!
     redirect_to root_path, 
-      alert: 'Sorry, you are not authorized to view this page.' unless current_user.class == DeliveryPerson
+      alert: 'Sorry, you are not authorized to view this page.'
+        unless current_user.is_a?(DeliveryPerson)
   end
 end

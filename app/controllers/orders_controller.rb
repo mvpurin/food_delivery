@@ -19,11 +19,13 @@ class OrdersController < ApplicationController
   end
 
   def pay
-    @order.pay
-    Services::AddCourierToOrder.new.call(@order)
-    redirect_to categories_path, notice: 'Successfully payed!'
-  rescue ActiveRecord::RecordInvalid => e
-    redirect_to categories_path, notice: 'Some problems, please try again...'
+    service = Services::PayOrder.new.call(@order)
+
+    if service == true
+      redirect_to categories_path, notice: 'Successfully payed!'
+    else
+      redirect_to order_path(@order), alert: 'Some problems, please try again...'
+    end
   end
 
   private

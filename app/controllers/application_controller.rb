@@ -4,12 +4,11 @@ class ApplicationController < ActionController::Base
   devise_group :delivery_person, contains: [:delivery_person]
 
   def after_sign_in_path_for(resource)
-    if resource.class == User && resource.admin?
-      return admin_categories_url
-    elsif resource.class == User && !resource.admin?
-      return categories_url
-    elsif resource.class == DeliveryPerson
-      return delivery_person_orders_url
+    case resource
+    when User
+      resource.admin? ? admin_categories_url : categories_url
+    when DeliveryPerson
+      delivery_person_orders_url
     end
   end
 
