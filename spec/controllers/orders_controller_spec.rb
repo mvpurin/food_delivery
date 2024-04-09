@@ -62,29 +62,38 @@ RSpec.describe OrdersController, type: :controller do
     let(:user) { create(:user) }
     let!(:order) { create(:order, user: user, delivery_address: user.address,
       client_phone: user.phone_number) }
+    let(:service) { instance_double('Services::PayOrder') }
     
     before { login(user) }
-    before { patch :pay, params: { id: order.id } }
-
+    
     it 'assigns requested order to @order' do
       patch :pay, params: { id: order.id }
       expect(assigns(:order)).to eq(order) 
     end
 
-    it 'calls #pay method to the @order' do
+    it 'calls Services::PayOrder' do
       allow(Order).to receive(:find).and_return(order)
-      expect(order).to receive(:pay)
+      allow(Services::PayOrder).to receive(:new).and_return(service)
+      expect(service).to receive(:call).with(order)
       patch :pay, params: { id: order.id }
     end
 
-    it 'calls Services::AddCourierToOrder' do
-      expect_any_instance_of(Services::AddCourierToOrder).to receive(:call).with(order)
-      patch :pay, params: { id: order.id }
+    context 'success' do
+      it 'redirects to categories path in case of success' do
+        patch :pay, params: { id: order.id }
+        expect(response).to redirect_to(categories_path)
+        expect(flash[:notice]).to eq 'Successfully payed!'
+      end
     end
 
-    it 'redirects to categories' do
-      patch :pay, params: { id: order.id }
-      expect(response).to redirect_to categories_path
+    context 'failed' do
+      it 'redirects to categories path in case of fail' do
+        allow(Services::PayOrder).to receive(:new).and_return(service)
+        allow(service).to receive(:call).with(order).and_return('some error')
+        patch :pay, params: { id: order.id }
+        expect(response).to redirect_to(order_path(order))
+        expect(flash[:alert]).to eq 'Some problems, please try again...'
+      end
     end
   end
 end

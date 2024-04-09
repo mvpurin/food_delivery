@@ -6,7 +6,14 @@ class DeliveryPerson < ApplicationRecord
 
   has_one :order
 
-  validates :first_name, presence: true
-  validates :last_name, presence: true
+  validates :first_name, :last_name, presence: true
   validates :phone_number, presence: true, uniqueness: true
+
+  def complete_order
+    ActiveRecord::Base.transaction do
+      self.order.update!(status: 'completed')
+      self.update!(order: nil)
+      self.update!(status: 'free')
+    end
+  end
 end
