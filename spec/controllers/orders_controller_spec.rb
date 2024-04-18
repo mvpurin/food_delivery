@@ -63,6 +63,7 @@ RSpec.describe OrdersController, type: :controller do
     let!(:order) { create(:order, user: user, delivery_address: user.address,
       client_phone: user.phone_number) }
     let(:service) { instance_double('Services::PayOrder') }
+    let(:result) { { result: true } }
     
     before { login(user) }
     
@@ -74,7 +75,7 @@ RSpec.describe OrdersController, type: :controller do
     it 'calls Services::PayOrder' do
       allow(Order).to receive(:find).and_return(order)
       allow(Services::PayOrder).to receive(:new).and_return(service)
-      expect(service).to receive(:call).with(order)
+      expect(service).to receive(:call).with(order).and_return(result)
       patch :pay, params: { id: order.id }
     end
 
@@ -87,9 +88,11 @@ RSpec.describe OrdersController, type: :controller do
     end
 
     context 'failed' do
+      let(:result) { { result: false, error: 'some error' } }
+
       it 'redirects to categories path in case of fail' do
         allow(Services::PayOrder).to receive(:new).and_return(service)
-        allow(service).to receive(:call).with(order).and_return('some error')
+        allow(service).to receive(:call).with(order).and_return(result)
         patch :pay, params: { id: order.id }
         expect(response).to redirect_to(order_path(order))
         expect(flash[:alert]).to eq 'Some problems, please try again...'
