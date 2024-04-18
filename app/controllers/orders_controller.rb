@@ -19,9 +19,9 @@ class OrdersController < ApplicationController
   end
 
   def pay
-    service = Services::PayOrder.new.call(@order)
+    result = Services::PayOrder.new.call(@order)
 
-    if service == true
+    if result[:result]
       redirect_to categories_path, notice: 'Successfully payed!'
     else
       redirect_to order_path(@order), alert: 'Some problems, please try again...'

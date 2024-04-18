@@ -11,9 +11,8 @@ class DeliveryPerson < ApplicationRecord
 
   def complete_order
     ActiveRecord::Base.transaction do
-      self.order.update!(status: 'completed')
-      self.update!(order: nil)
-      self.update!(status: 'free')
+      order.update!(status: 'completed')
+      update!(order: nil, status: 'free')
     end
   end
 end

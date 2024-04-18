@@ -5,9 +5,9 @@ module Services
         order.pay
         Services::AddCourierToOrder.new.call(order)
       end
-      return true
+      return { result: true }
     rescue StandardError => e
-      return e.message
+      return { result: false, error: e.message }
     end
   end
 end
